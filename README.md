@@ -26,7 +26,7 @@ import (
 	"io/ioutil"
 	"testing"
 
-	generator "github.com/angelodlfrtr/go-invoice-generator"
+	generator "github.com/huijunyam/go-invoice-generator"
 )
 
 func TestNew(t *testing.T) {
