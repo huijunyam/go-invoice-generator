@@ -466,10 +466,12 @@ func (doc *Document) appendTotal() {
 			0,
 			"",
 		)
+	} else {
+		doc.pdf.SetY(doc.pdf.GetY() + 10)
 	}
 
 	// Draw total with tax title
-	doc.pdf.SetY(doc.pdf.GetY() + 10)
+	// doc.pdf.SetY(doc.pdf.GetY() + 10)
 	doc.pdf.SetX(120)
 	doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
 	doc.pdf.Rect(120, doc.pdf.GetY(), 40, 10, "F")
