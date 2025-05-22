@@ -25,10 +25,10 @@ func (d *Document) SetRef(ref string) *Document {
 }
 
 // SetVersion of document
-func (d *Document) SetVersion(version string) *Document {
-	d.Version = version
-	return d
-}
+// func (d *Document) SetVersion(version string) *Document {
+// 	d.Version = version
+// 	return d
+// }
 
 // SetDescription of document
 func (d *Document) SetDescription(desc string) *Document {

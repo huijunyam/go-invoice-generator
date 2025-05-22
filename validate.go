@@ -19,11 +19,11 @@ func (d *Document) Validate() error {
 	}
 
 	// Prepare document discount
-	if d.Discount != nil {
-		if err := d.Discount.Prepare(); err != nil {
-			return err
-		}
-	}
+	// if d.Discount != nil {
+	// 	if err := d.Discount.Prepare(); err != nil {
+	// 		return err
+	// 	}
+	// }
 
 	return nil
 }
