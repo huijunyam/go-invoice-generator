@@ -24,6 +24,11 @@ func (d *Document) SetRef(ref string) *Document {
 	return d
 }
 
+func (d *Document) SetClientRef(ref string) *Document {
+	d.ClientRef = ref
+	return d
+}
+
 // SetVersion of document
 // func (d *Document) SetVersion(version string) *Document {
 // 	d.Version = version
@@ -122,5 +127,10 @@ func (d *Document) SetTotal(total string) *Document {
 
 func (d *Document) SetCurrencySymbol(symbol string) *Document {
 	d.CurrencySymbol = symbol
+	return d
+}
+
+func (d *Document) SetShipping(shipping string) *Document {
+	d.Shipping = shipping
 	return d
 }

@@ -16,7 +16,8 @@ type Options struct {
 	TextTypeQuotation    string `default:"QUOTATION" json:"text_type_quotation,omitempty"`
 	TextTypeDeliveryNote string `default:"DELIVERY NOTE" json:"text_type_delivery_note,omitempty"`
 
-	TextRefTitle          string `default:"Ref." json:"text_ref_title,omitempty"`
+	TextRefTitle          string `default:"Reference" json:"text_ref_title,omitempty"`
+	TextClientRefTitle    string `default:"Customer Reference" json:"text_client_ref_title,omitempty"`
 	TextVersionTitle      string `default:"Version" json:"text_version_title,omitempty"`
 	TextDateTitle         string `default:"Order Date" json:"text_date_title,omitempty"`
 	TextDeliveryDateTitle string `default:"Delivery Date" json:"text_delivery_date_title,omitempty"`
@@ -34,6 +35,7 @@ type Options struct {
 	TextTotalTotal      string `default:"SUBTOTAL" json:"text_total_total,omitempty"`
 	TextTotalDiscounted string `default:"DISCOUNT" json:"text_total_discounted,omitempty"`
 	TextTotalTax        string `default:"TAX" json:"text_total_tax,omitempty"`
+	TextTotalShipping   string `default:"FREIGHT" json:"text_total_shipping,omitempty"`
 	TextTotalWithTax    string `default:"TOTAL" json:"text_total_with_tax,omitempty"`
 
 	BaseTextColor []int `default:"[35,35,35]" json:"base_text_color,omitempty"`

@@ -126,13 +126,21 @@ func (doc *Document) appendMetas() {
 	// 	doc.pdf.CellFormat(80, 4, doc.encodeString(versionString), "0", 0, "R", false, 0, "")
 	// }
 
+	// Append client ref
+	if len(doc.ClientRef) > 0 {
+		clientRefString := fmt.Sprintf("%s: %s", doc.Options.TextClientRefTitle, doc.ClientRef)
+		doc.pdf.SetXY(120, BaseMarginTop+15)
+		doc.pdf.SetFont(doc.Options.Font, "", 8)
+		doc.pdf.CellFormat(80, 4, doc.encodeString(clientRefString), "0", 0, "R", false, 0, "")
+	}
+
 	// Append date
 	date := time.Now().Format("02/01/2006")
 	if len(doc.Date) > 0 {
 		date = doc.Date
 	}
 	dateString := fmt.Sprintf("%s: %s", doc.Options.TextDateTitle, date)
-	doc.pdf.SetXY(120, BaseMarginTop+15)
+	doc.pdf.SetXY(120, BaseMarginTop+19)
 	doc.pdf.SetFont(doc.Options.Font, "", 8)
 	doc.pdf.CellFormat(80, 4, doc.encodeString(dateString), "0", 0, "R", false, 0, "")
 
@@ -142,7 +150,7 @@ func (doc *Document) appendMetas() {
 		deliveryDate = doc.DeliveryDate
 	}
 	deliveryDateString := fmt.Sprintf("%s: %s", doc.Options.TextDeliveryDateTitle, deliveryDate)
-	doc.pdf.SetXY(120, BaseMarginTop+19)
+	doc.pdf.SetXY(120, BaseMarginTop+23)
 	doc.pdf.SetFont(doc.Options.Font, "", 8)
 	doc.pdf.CellFormat(80, 4, doc.encodeString(deliveryDateString), "0", 0, "R", false, 0, "")
 }
@@ -459,6 +467,30 @@ func (doc *Document) appendTotal() {
 			40,
 			10,
 			doc.encodeString(fmt.Sprintf("%s %s", doc.CurrencySymbol, doc.TaxAmount)),
+			"0",
+			0,
+			"L",
+			false,
+			0,
+			"",
+		)
+		doc.pdf.SetY(doc.pdf.GetY() + 10)
+	}
+
+	if doc.Shipping != "" {
+		doc.pdf.SetX(120)
+		doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
+		doc.pdf.Rect(120, doc.pdf.GetY(), 40, 10, "F")
+		doc.pdf.CellFormat(38, 10, doc.encodeString(doc.Options.TextTotalShipping), "0", 0, "R", false, 0, "")
+
+		// Draw tax amount
+		doc.pdf.SetX(162)
+		doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
+		doc.pdf.Rect(160, doc.pdf.GetY(), 40, 10, "F")
+		doc.pdf.CellFormat(
+			40,
+			10,
+			doc.encodeString(fmt.Sprintf("%s %s", doc.CurrencySymbol, doc.Shipping)),
 			"0",
 			0,
 			"L",

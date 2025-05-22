@@ -32,6 +32,7 @@ type Document struct {
 	TaxAmount          string   `json:"tax_amount,omitempty"`
 	Subtotal           string   `json:"subtotal,omitempty"`
 	Total              string   `json:"total,omitempty"`
+	Shipping           string   `json:"shipping,omitempty"`
 	CurrencySymbol     string   `json:"currency_symbol,omitempty"`
 }
 
