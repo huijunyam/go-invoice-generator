@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"fmt"
 
-	generator "github.com/angelodlfrtr/go-invoice-generator"
+	generator "github.com/huijunyam/go-invoice-generator"
 )
 
 func main() {
@@ -29,7 +29,7 @@ func main() {
 	})
 
 	doc.SetRef("testràf")
-	doc.SetVersion("someversion")
+	// doc.SetVersion("someversion")
 
 	doc.SetDescription("A description àç")
 	doc.SetNotes("I léove croissant cotton candy.")
@@ -64,9 +64,9 @@ func main() {
 			Description: "Cupcake ipsum dolor sit amet bonbon, Cupcake ipsum dolor sit",
 			UnitCost:    "99876.89",
 			Quantity:    "2",
-			Tax: &generator.Tax{
-				Percent: "20",
-			},
+			// Tax: &generator.Tax{
+			// 	Percent: "20",
+			// },
 		})
 	}
 
@@ -74,30 +74,30 @@ func main() {
 		Name:     "Test",
 		UnitCost: "99876.89",
 		Quantity: "2",
-		Tax: &generator.Tax{
-			Amount: "89",
-		},
-		Discount: &generator.Discount{
-			Percent: "30",
-		},
+		// Tax: &generator.Tax{
+		// 	Amount: "89",
+		// },
+		// Discount: &generator.Discount{
+		// 	Percent: "30",
+		// },
 	})
 
 	doc.AppendItem(&generator.Item{
 		Name:     "Test",
 		UnitCost: "889.89",
 		Quantity: "2",
-		Discount: &generator.Discount{
-			Amount: "234.67",
-		},
+		// Discount: &generator.Discount{
+		// 	Amount: "234.67",
+		// },
 	})
 
-	doc.SetDefaultTax(&generator.Tax{
-		Percent: "10",
-	})
+	// doc.SetDefaultTax(&generator.Tax{
+	// 	Percent: "10",
+	// })
 
-	doc.SetDiscount(&generator.Discount{
-		Amount: "1340",
-	})
+	// doc.SetDiscount(&generator.Discount{
+	// 	Amount: "1340",
+	// })
 
 	pdf, err := doc.Build()
 	if err != nil {
