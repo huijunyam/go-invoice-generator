@@ -371,71 +371,103 @@ func (doc *Document) appendTotal() {
 		0,
 		"",
 	)
+	doc.pdf.SetY(doc.pdf.GetY() + 10)
 
+	// if doc.DiscountAmount != "" {
+	// 	baseY := doc.pdf.GetY() + 10
+
+	// 	discountTitle := doc.Options.TextTotalDiscounted
+	// 	if doc.DiscountPercentage != "" {
+	// 		discountTitle = discountTitle + " (" + doc.DiscountPercentage + "%)"
+	// 	}
+	// 	// Draw discounted title
+	// 	doc.pdf.SetXY(120, baseY)
+	// 	doc.pdf.SetX(120)
+	// 	doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
+	// 	doc.pdf.Rect(120, doc.pdf.GetY(), 40, 10, "F")
+
+	// 	// title
+	// 	doc.pdf.CellFormat(38, 7.5, doc.encodeString(discountTitle), "0", 0, "BR", false, 0, "")
+
+	// 	// description
+	// 	// doc.pdf.SetXY(120, baseY+7.5)
+	// 	// doc.pdf.SetFont(doc.Options.Font, "", BaseTextFontSize)
+	// 	// doc.pdf.SetTextColor(
+	// 	// 	doc.Options.GreyTextColor[0],
+	// 	// 	doc.Options.GreyTextColor[1],
+	// 	// 	doc.Options.GreyTextColor[2],
+	// 	// )
+
+	// 	// var descString bytes.Buffer
+	// 	// if doc.DiscountPercentage != "" {
+	// 	// 	descString.WriteString(fmt.Sprintf("%s %", doc.DiscountPercentage))
+	// 	// }
+	// 	// discountType, discountAmount := doc.Discount.getDiscount()
+	// 	// if discountType == DiscountTypePercent {
+	// 	// 	descString.WriteString("-")
+	// 	// 	descString.WriteString(discountAmount.String())
+	// 	// 	descString.WriteString(" % / -")
+	// 	// 	descString.WriteString(doc.ac.FormatMoneyDecimal(
+	// 	// 		doc.TotalWithoutTaxAndWithoutDocumentDiscount().Sub(doc.TotalWithoutTax())),
+	// 	// 	)
+	// 	// } else {
+	// 	// 	descString.WriteString("-")
+	// 	// 	descString.WriteString(doc.ac.FormatMoneyDecimal(discountAmount))
+	// 	// 	descString.WriteString(" / -")
+	// 	// 	descString.WriteString(
+	// 	// 		discountAmount.Mul(decimal.NewFromFloat(100)).Div(doc.TotalWithoutTaxAndWithoutDocumentDiscount()).StringFixed(2),
+	// 	// 	)
+	// 	// 	descString.WriteString(" %")
+	// 	// }
+
+	// 	// doc.pdf.CellFormat(38, 7.5, doc.encodeString(descString.String()), "0", 0, "TR", false, 0, "")
+
+	// 	doc.pdf.SetFont(doc.Options.Font, "", LargeTextFontSize)
+	// 	doc.pdf.SetTextColor(
+	// 		doc.Options.BaseTextColor[0],
+	// 		doc.Options.BaseTextColor[1],
+	// 		doc.Options.BaseTextColor[2],
+	// 	)
+
+	// 	// Draw discount amount
+	// 	// doc.pdf.SetY(baseY)
+	// 	doc.pdf.SetX(162)
+	// 	doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
+	// 	doc.pdf.Rect(160, doc.pdf.GetY(), 40, 10, "F")
+	// 	doc.pdf.CellFormat(
+	// 		40,
+	// 		10,
+	// 		doc.encodeString(fmt.Sprintf("%s %s", doc.CurrencySymbol, doc.DiscountAmount)),
+	// 		"0",
+	// 		0,
+	// 		"L",
+	// 		false,
+	// 		0,
+	// 		"",
+	// 	)
+	// 	doc.pdf.SetY(doc.pdf.GetY() + 10)
+	// } else {
+	// 	doc.pdf.SetY(doc.pdf.GetY() + 10)
+	// }
+
+	// Draw tax title
 	if doc.DiscountAmount != "" {
-		baseY := doc.pdf.GetY() + 10
-
 		discountTitle := doc.Options.TextTotalDiscounted
 		if doc.DiscountPercentage != "" {
 			discountTitle = discountTitle + " (" + doc.DiscountPercentage + "%)"
 		}
-		// Draw discounted title
-		doc.pdf.SetXY(120, baseY)
 		doc.pdf.SetX(120)
 		doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
-		doc.pdf.Rect(120, doc.pdf.GetY(), 40, 15, "F")
+		doc.pdf.Rect(120, doc.pdf.GetY(), 40, 10, "F")
+		doc.pdf.CellFormat(38, 10, doc.encodeString(discountTitle), "0", 0, "R", false, 0, "")
 
-		// title
-		doc.pdf.CellFormat(38, 7.5, doc.encodeString(discountTitle), "0", 0, "BR", false, 0, "")
-
-		// description
-		// doc.pdf.SetXY(120, baseY+7.5)
-		// doc.pdf.SetFont(doc.Options.Font, "", BaseTextFontSize)
-		// doc.pdf.SetTextColor(
-		// 	doc.Options.GreyTextColor[0],
-		// 	doc.Options.GreyTextColor[1],
-		// 	doc.Options.GreyTextColor[2],
-		// )
-
-		// var descString bytes.Buffer
-		// if doc.DiscountPercentage != "" {
-		// 	descString.WriteString(fmt.Sprintf("%s %", doc.DiscountPercentage))
-		// }
-		// discountType, discountAmount := doc.Discount.getDiscount()
-		// if discountType == DiscountTypePercent {
-		// 	descString.WriteString("-")
-		// 	descString.WriteString(discountAmount.String())
-		// 	descString.WriteString(" % / -")
-		// 	descString.WriteString(doc.ac.FormatMoneyDecimal(
-		// 		doc.TotalWithoutTaxAndWithoutDocumentDiscount().Sub(doc.TotalWithoutTax())),
-		// 	)
-		// } else {
-		// 	descString.WriteString("-")
-		// 	descString.WriteString(doc.ac.FormatMoneyDecimal(discountAmount))
-		// 	descString.WriteString(" / -")
-		// 	descString.WriteString(
-		// 		discountAmount.Mul(decimal.NewFromFloat(100)).Div(doc.TotalWithoutTaxAndWithoutDocumentDiscount()).StringFixed(2),
-		// 	)
-		// 	descString.WriteString(" %")
-		// }
-
-		// doc.pdf.CellFormat(38, 7.5, doc.encodeString(descString.String()), "0", 0, "TR", false, 0, "")
-
-		doc.pdf.SetFont(doc.Options.Font, "", LargeTextFontSize)
-		doc.pdf.SetTextColor(
-			doc.Options.BaseTextColor[0],
-			doc.Options.BaseTextColor[1],
-			doc.Options.BaseTextColor[2],
-		)
-
-		// Draw discount amount
-		// doc.pdf.SetY(baseY)
+		// Draw tax amount
 		doc.pdf.SetX(162)
 		doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
-		doc.pdf.Rect(160, doc.pdf.GetY(), 40, 15, "F")
+		doc.pdf.Rect(160, doc.pdf.GetY(), 40, 10, "F")
 		doc.pdf.CellFormat(
 			40,
-			15,
+			10,
 			doc.encodeString(fmt.Sprintf("%s %s", doc.CurrencySymbol, doc.DiscountAmount)),
 			"0",
 			0,
@@ -444,8 +476,6 @@ func (doc *Document) appendTotal() {
 			0,
 			"",
 		)
-		doc.pdf.SetY(doc.pdf.GetY() + 10)
-	} else {
 		doc.pdf.SetY(doc.pdf.GetY() + 10)
 	}
 
