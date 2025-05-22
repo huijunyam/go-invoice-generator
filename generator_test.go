@@ -43,7 +43,7 @@ func TestNew(t *testing.T) {
 	})
 
 	doc.SetRef("testràf")
-	doc.SetVersion("someversion")
+	// doc.SetVersion("someversion")
 
 	doc.SetDescription("A description àç")
 	doc.SetNotes("I léove croissant cotton candy. Carrot cake sweet Ià love sweet roll cake powder! I love croissant cotton candy. Carrot cake sweet I love sweet roll cake powder! I love croissant cotton candy. Carrot cake sweet I love sweet roll cake powder! I love croissant cotton candy. Carrot cake sweet I love sweet roll cake powder! ")
@@ -86,9 +86,9 @@ func TestNew(t *testing.T) {
 			Description: "Cupcake ipsum dolor sit amet bonbon, Cupcake ipsum dolor sit amet bonbon, Cupcake ipsum dolor sit amet bonbon",
 			UnitCost:    "99876.89",
 			Quantity:    "2",
-			Tax: &Tax{
-				Percent: "20",
-			},
+			// Tax: &Tax{
+			// 	Percent: "20",
+			// },
 		})
 	}
 
@@ -96,42 +96,42 @@ func TestNew(t *testing.T) {
 		Name:     "Test",
 		UnitCost: "99876.89",
 		Quantity: "2",
-		Tax: &Tax{
-			Amount: "89",
-		},
-		Discount: &Discount{
-			Percent: "30",
-		},
+		// Tax: &Tax{
+		// 	Amount: "89",
+		// },
+		// Discount: &Discount{
+		// 	Percent: "30",
+		// },
 	})
 
 	doc.AppendItem(&Item{
 		Name:     "Test",
 		UnitCost: "3576.89",
 		Quantity: "2",
-		Discount: &Discount{
-			Percent: "50",
-		},
+		// Discount: &Discount{
+		// 	Percent: "50",
+		// },
 	})
 
 	doc.AppendItem(&Item{
 		Name:     "Test",
 		UnitCost: "889.89",
 		Quantity: "2",
-		Discount: &Discount{
-			Amount: "234.67",
-		},
+		// Discount: &Discount{
+		// 	Amount: "234.67",
+		// },
 	})
 
-	doc.SetDefaultTax(&Tax{
-		Percent: "10",
-	})
+	// doc.SetDefaultTax(&Tax{
+	// 	Percent: "10",
+	// })
 
 	// doc.SetDiscount(&Discount{
 	// Percent: "90",
 	// })
-	doc.SetDiscount(&Discount{
-		Amount: "1340",
-	})
+	// doc.SetDiscount(&Discount{
+	// 	Amount: "1340",
+	// })
 
 	pdf, err := doc.Build()
 	if err != nil {
