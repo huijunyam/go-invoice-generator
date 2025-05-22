@@ -466,7 +466,6 @@ func (doc *Document) appendTotal() {
 			0,
 			"",
 		)
-	} else {
 		doc.pdf.SetY(doc.pdf.GetY() + 10)
 	}
 
