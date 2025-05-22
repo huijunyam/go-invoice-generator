@@ -22,6 +22,7 @@ type Options struct {
 	TextPaymentTermTitle string `default:"Payment term" json:"text_payment_term_title,omitempty"`
 
 	TextItemsNameTitle     string `default:"Name" json:"text_items_name_title,omitempty"`
+	TextItemsSKUTitle      string `default:"SKU" json:"text_items_sku_title,omitempty"`
 	TextItemsUnitCostTitle string `default:"Unit price" json:"text_items_unit_cost_title,omitempty"`
 	TextItemsQuantityTitle string `default:"Qty" json:"text_items_quantity_title,omitempty"`
 	TextItemsTotalHTTitle  string `default:"Total no tax" json:"text_items_total_ht_title,omitempty"`
@@ -29,10 +30,10 @@ type Options struct {
 	TextItemsDiscountTitle string `default:"Discount" json:"text_items_discount_title,omitempty"`
 	TextItemsTotalTTCTitle string `default:"Total" json:"text_items_total_ttc_title,omitempty"`
 
-	TextTotalTotal      string `default:"TOTAL" json:"text_total_total,omitempty"`
-	TextTotalDiscounted string `default:"TOTAL DISCOUNTED" json:"text_total_discounted,omitempty"`
+	TextTotalTotal      string `default:"SUBTOTAL" json:"text_total_total,omitempty"`
+	TextTotalDiscounted string `default:"DISCOUNT" json:"text_total_discounted,omitempty"`
 	TextTotalTax        string `default:"TAX" json:"text_total_tax,omitempty"`
-	TextTotalWithTax    string `default:"TOTAL WITH TAX" json:"text_total_with_tax,omitempty"`
+	TextTotalWithTax    string `default:"TOTAL" json:"text_total_with_tax,omitempty"`
 
 	BaseTextColor []int `default:"[35,35,35]" json:"base_text_color,omitempty"`
 	GreyTextColor []int `default:"[82,82,82]" json:"grey_text_color,omitempty"`

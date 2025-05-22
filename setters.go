@@ -73,13 +73,48 @@ func (d *Document) SetPaymentTerm(term string) *Document {
 }
 
 // SetDefaultTax of document
-func (d *Document) SetDefaultTax(tax *Tax) *Document {
-	d.DefaultTax = tax
+// func (d *Document) SetDefaultTax(tax *Tax) *Document {
+// 	d.DefaultTax = tax
+// 	return d
+// }
+
+// // SetDiscount of document
+// func (d *Document) SetDiscount(discount *Discount) *Document {
+// 	d.Discount = discount
+// 	return d
+// }
+
+func (d *Document) SetDiscountPercentage(percentage string) *Document {
+	d.DiscountPercentage = percentage
 	return d
 }
 
-// SetDiscount of document
-func (d *Document) SetDiscount(discount *Discount) *Document {
-	d.Discount = discount
+func (d *Document) SetDiscountAmount(amount string) *Document {
+	d.DiscountAmount = amount
+	return d
+}
+
+func (d *Document) SetTaxPercentage(percentage string) *Document {
+	d.TaxPercentage = percentage
+	return d
+}
+
+func (d *Document) SetTaxAmount(amount string) *Document {
+	d.TaxAmount = amount
+	return d
+}
+
+func (d *Document) SetSubtotal(subtotal string) *Document {
+	d.Subtotal = subtotal
+	return d
+}
+
+func (d *Document) SetTotal(total string) *Document {
+	d.Total = total
+	return d
+}
+
+func (d *Document) SetCurrencySymbol(symbol string) *Document {
+	d.CurrencySymbol = symbol
 	return d
 }

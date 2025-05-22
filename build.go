@@ -1,12 +1,10 @@
 package generator
 
 import (
-	"bytes"
 	"fmt"
 	"time"
 
 	"github.com/go-pdf/fpdf"
-	"github.com/shopspring/decimal"
 )
 
 // Build pdf document from data provided
@@ -71,7 +69,7 @@ func (doc *Document) Build() (*fpdf.Fpdf, error) {
 
 	// Check page height (total bloc height = 30, 45 when doc discount)
 	offset := doc.pdf.GetY() + 30
-	if doc.Discount != nil {
+	if doc.DiscountAmount != "" {
 		offset += 15
 	}
 	if offset > MaxPageHeight {
@@ -85,7 +83,7 @@ func (doc *Document) Build() (*fpdf.Fpdf, error) {
 	doc.appendTotal()
 
 	// Append payment term
-	doc.appendPaymentTerm()
+	// doc.appendPaymentTerm()
 
 	// Append js to autoprint if AutoPrint == true
 	if doc.Options.AutoPrint {
@@ -121,12 +119,12 @@ func (doc *Document) appendMetas() {
 	doc.pdf.CellFormat(80, 4, doc.encodeString(refString), "0", 0, "R", false, 0, "")
 
 	// Append version
-	if len(doc.Version) > 0 {
-		versionString := fmt.Sprintf("%s: %s", doc.Options.TextVersionTitle, doc.Version)
-		doc.pdf.SetXY(120, BaseMarginTop+15)
-		doc.pdf.SetFont(doc.Options.Font, "", 8)
-		doc.pdf.CellFormat(80, 4, doc.encodeString(versionString), "0", 0, "R", false, 0, "")
-	}
+	// if len(doc.Version) > 0 {
+	// 	versionString := fmt.Sprintf("%s: %s", doc.Options.TextVersionTitle, doc.Version)
+	// 	doc.pdf.SetXY(120, BaseMarginTop+15)
+	// 	doc.pdf.SetFont(doc.Options.Font, "", 8)
+	// 	doc.pdf.CellFormat(80, 4, doc.encodeString(versionString), "0", 0, "R", false, 0, "")
+	// }
 
 	// Append date
 	date := time.Now().Format("02/01/2006")
@@ -173,6 +171,20 @@ func (doc *Document) drawsTableTitles() {
 		"",
 	)
 
+	// SKU
+	doc.pdf.SetX(ItemColSKUOffset)
+	doc.pdf.CellFormat(
+		ItemColUnitPriceOffset-ItemColSKUOffset,
+		6,
+		doc.encodeString(doc.Options.TextItemsSKUTitle),
+		"0",
+		0,
+		"",
+		false,
+		0,
+		"",
+	)
+
 	// Unit price
 	doc.pdf.SetX(ItemColUnitPriceOffset)
 	doc.pdf.CellFormat(
@@ -190,7 +202,7 @@ func (doc *Document) drawsTableTitles() {
 	// Quantity
 	doc.pdf.SetX(ItemColQuantityOffset)
 	doc.pdf.CellFormat(
-		ItemColTaxOffset-ItemColQuantityOffset,
+		ItemColTotalTTCOffset-ItemColQuantityOffset,
 		6,
 		doc.encodeString(doc.Options.TextItemsQuantityTitle),
 		"0",
@@ -201,47 +213,47 @@ func (doc *Document) drawsTableTitles() {
 		"",
 	)
 
-	// Total HT
-	doc.pdf.SetX(ItemColTotalHTOffset)
-	doc.pdf.CellFormat(
-		ItemColTaxOffset-ItemColTotalHTOffset,
-		6,
-		doc.encodeString(doc.Options.TextItemsTotalHTTitle),
-		"0",
-		0,
-		"",
-		false,
-		0,
-		"",
-	)
+	// // Total HT
+	// doc.pdf.SetX(ItemColTotalHTOffset)
+	// doc.pdf.CellFormat(
+	// 	ItemColTaxOffset-ItemColTotalHTOffset,
+	// 	6,
+	// 	doc.encodeString(doc.Options.TextItemsTotalHTTitle),
+	// 	"0",
+	// 	0,
+	// 	"",
+	// 	false,
+	// 	0,
+	// 	"",
+	// )
 
-	// Tax
-	doc.pdf.SetX(ItemColTaxOffset)
-	doc.pdf.CellFormat(
-		ItemColDiscountOffset-ItemColTaxOffset,
-		6,
-		doc.encodeString(doc.Options.TextItemsTaxTitle),
-		"0",
-		0,
-		"",
-		false,
-		0,
-		"",
-	)
+	// // Tax
+	// doc.pdf.SetX(ItemColTaxOffset)
+	// doc.pdf.CellFormat(
+	// 	ItemColDiscountOffset-ItemColTaxOffset,
+	// 	6,
+	// 	doc.encodeString(doc.Options.TextItemsTaxTitle),
+	// 	"0",
+	// 	0,
+	// 	"",
+	// 	false,
+	// 	0,
+	// 	"",
+	// )
 
-	// Discount
-	doc.pdf.SetX(ItemColDiscountOffset)
-	doc.pdf.CellFormat(
-		ItemColTotalTTCOffset-ItemColDiscountOffset,
-		6,
-		doc.encodeString(doc.Options.TextItemsDiscountTitle),
-		"0",
-		0,
-		"",
-		false,
-		0,
-		"",
-	)
+	// // Discount
+	// doc.pdf.SetX(ItemColDiscountOffset)
+	// doc.pdf.CellFormat(
+	// 	ItemColTotalTTCOffset-ItemColDiscountOffset,
+	// 	6,
+	// 	doc.encodeString(doc.Options.TextItemsDiscountTitle),
+	// 	"0",
+	// 	0,
+	// 	"",
+	// 	false,
+	// 	0,
+	// 	"",
+	// )
 
 	// TOTAL TTC
 	doc.pdf.SetX(ItemColTotalTTCOffset)
@@ -269,10 +281,10 @@ func (doc *Document) appendItems() {
 	for i := 0; i < len(doc.Items); i++ {
 		item := doc.Items[i]
 
-		// Check item tax
-		if item.Tax == nil {
-			item.Tax = doc.DefaultTax
-		}
+		// // Check item tax
+		// if item.Tax == nil {
+		// 	item.Tax = doc.DefaultTax
+		// }
 
 		// Append to pdf
 		item.appendColTo(doc.Options, doc)
@@ -333,7 +345,7 @@ func (doc *Document) appendTotal() {
 	doc.pdf.CellFormat(
 		40,
 		10,
-		doc.encodeString(doc.ac.FormatMoneyDecimal(doc.TotalWithoutTaxAndWithoutDocumentDiscount())),
+		doc.encodeString(fmt.Sprintf("%s %s", doc.CurrencySymbol, doc.Subtotal)),
 		"0",
 		0,
 		"L",
@@ -342,46 +354,53 @@ func (doc *Document) appendTotal() {
 		"",
 	)
 
-	if doc.Discount != nil {
+	if doc.DiscountAmount != "" {
 		baseY := doc.pdf.GetY() + 10
 
+		discountTitle := doc.Options.TextTotalDiscounted
+		if doc.DiscountPercentage != "" {
+			discountTitle = fmt.Sprintf("%s (%s%)", discountTitle, doc.DiscountPercentage)
+		}
 		// Draw discounted title
 		doc.pdf.SetXY(120, baseY)
 		doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
 		doc.pdf.Rect(120, doc.pdf.GetY(), 40, 15, "F")
 
 		// title
-		doc.pdf.CellFormat(38, 7.5, doc.encodeString(doc.Options.TextTotalDiscounted), "0", 0, "BR", false, 0, "")
+		doc.pdf.CellFormat(38, 7.5, doc.encodeString(discountTitle), "0", 0, "BR", false, 0, "")
 
 		// description
-		doc.pdf.SetXY(120, baseY+7.5)
-		doc.pdf.SetFont(doc.Options.Font, "", BaseTextFontSize)
-		doc.pdf.SetTextColor(
-			doc.Options.GreyTextColor[0],
-			doc.Options.GreyTextColor[1],
-			doc.Options.GreyTextColor[2],
-		)
+		// doc.pdf.SetXY(120, baseY+7.5)
+		// doc.pdf.SetFont(doc.Options.Font, "", BaseTextFontSize)
+		// doc.pdf.SetTextColor(
+		// 	doc.Options.GreyTextColor[0],
+		// 	doc.Options.GreyTextColor[1],
+		// 	doc.Options.GreyTextColor[2],
+		// )
 
-		var descString bytes.Buffer
-		discountType, discountAmount := doc.Discount.getDiscount()
-		if discountType == DiscountTypePercent {
-			descString.WriteString("-")
-			descString.WriteString(discountAmount.String())
-			descString.WriteString(" % / -")
-			descString.WriteString(doc.ac.FormatMoneyDecimal(
-				doc.TotalWithoutTaxAndWithoutDocumentDiscount().Sub(doc.TotalWithoutTax())),
-			)
-		} else {
-			descString.WriteString("-")
-			descString.WriteString(doc.ac.FormatMoneyDecimal(discountAmount))
-			descString.WriteString(" / -")
-			descString.WriteString(
-				discountAmount.Mul(decimal.NewFromFloat(100)).Div(doc.TotalWithoutTaxAndWithoutDocumentDiscount()).StringFixed(2),
-			)
-			descString.WriteString(" %")
-		}
+		// var descString bytes.Buffer
+		// if doc.DiscountPercentage != "" {
+		// 	descString.WriteString(fmt.Sprintf("%s %", doc.DiscountPercentage))
+		// }
+		// discountType, discountAmount := doc.Discount.getDiscount()
+		// if discountType == DiscountTypePercent {
+		// 	descString.WriteString("-")
+		// 	descString.WriteString(discountAmount.String())
+		// 	descString.WriteString(" % / -")
+		// 	descString.WriteString(doc.ac.FormatMoneyDecimal(
+		// 		doc.TotalWithoutTaxAndWithoutDocumentDiscount().Sub(doc.TotalWithoutTax())),
+		// 	)
+		// } else {
+		// 	descString.WriteString("-")
+		// 	descString.WriteString(doc.ac.FormatMoneyDecimal(discountAmount))
+		// 	descString.WriteString(" / -")
+		// 	descString.WriteString(
+		// 		discountAmount.Mul(decimal.NewFromFloat(100)).Div(doc.TotalWithoutTaxAndWithoutDocumentDiscount()).StringFixed(2),
+		// 	)
+		// 	descString.WriteString(" %")
+		// }
 
-		doc.pdf.CellFormat(38, 7.5, doc.encodeString(descString.String()), "0", 0, "TR", false, 0, "")
+		// doc.pdf.CellFormat(38, 7.5, doc.encodeString(descString.String()), "0", 0, "TR", false, 0, "")
 
 		doc.pdf.SetFont(doc.Options.Font, "", LargeTextFontSize)
 		doc.pdf.SetTextColor(
@@ -398,7 +417,7 @@ func (doc *Document) appendTotal() {
 		doc.pdf.CellFormat(
 			40,
 			15,
-			doc.encodeString(doc.ac.FormatMoneyDecimal(doc.TotalWithoutTax())),
+			doc.encodeString(fmt.Sprintf("%s %s", doc.CurrencySymbol, doc.DiscountAmount)),
 			"0",
 			0,
 			"L",
@@ -412,26 +431,33 @@ func (doc *Document) appendTotal() {
 	}
 
 	// Draw tax title
-	doc.pdf.SetX(120)
-	doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
-	doc.pdf.Rect(120, doc.pdf.GetY(), 40, 10, "F")
-	doc.pdf.CellFormat(38, 10, doc.encodeString(doc.Options.TextTotalTax), "0", 0, "R", false, 0, "")
+	if doc.TaxAmount != "" {
 
-	// Draw tax amount
-	doc.pdf.SetX(162)
-	doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
-	doc.pdf.Rect(160, doc.pdf.GetY(), 40, 10, "F")
-	doc.pdf.CellFormat(
-		40,
-		10,
-		doc.encodeString(doc.ac.FormatMoneyDecimal(doc.Tax())),
-		"0",
-		0,
-		"L",
-		false,
-		0,
-		"",
-	)
+		taxTitle := doc.Options.TextTotalTax
+		if doc.TaxPercentage != "" {
+			taxTitle = fmt.Sprintf("%s (%s%)", taxTitle, doc.TaxPercentage)
+		}
+		doc.pdf.SetX(120)
+		doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
+		doc.pdf.Rect(120, doc.pdf.GetY(), 40, 10, "F")
+		doc.pdf.CellFormat(38, 10, doc.encodeString(taxTitle), "0", 0, "R", false, 0, "")
+
+		// Draw tax amount
+		doc.pdf.SetX(162)
+		doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
+		doc.pdf.Rect(160, doc.pdf.GetY(), 40, 10, "F")
+		doc.pdf.CellFormat(
+			40,
+			10,
+			doc.encodeString(fmt.Sprintf("%s %s", doc.CurrencySymbol, doc.TaxAmount)),
+			"0",
+			0,
+			"L",
+			false,
+			0,
+			"",
+		)
+	}
 
 	// Draw total with tax title
 	doc.pdf.SetY(doc.pdf.GetY() + 10)
@@ -447,7 +473,7 @@ func (doc *Document) appendTotal() {
 	doc.pdf.CellFormat(
 		40,
 		10,
-		doc.encodeString(doc.ac.FormatMoneyDecimal(doc.TotalWithTax())),
+		doc.encodeString(fmt.Sprintf("%s %s", doc.CurrencySymbol, doc.Total)),
 		"0",
 		0,
 		"L",
