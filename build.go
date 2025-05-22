@@ -79,9 +79,10 @@ func (doc *Document) Build() (*fpdf.Fpdf, error) {
 	// Append notes
 	doc.appendNotes()
 
-	// Append total
-	doc.appendTotal()
-
+	if doc.Type == Invoice {
+		// Append total
+		doc.appendTotal()
+	}
 	// Append payment term
 	// doc.appendPaymentTerm()
 

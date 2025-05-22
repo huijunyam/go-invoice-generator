@@ -17,6 +17,7 @@ type Item struct {
 	// Tax         *Tax      `json:"tax,omitempty"`
 	// Discount    *Discount `json:"discount,omitempty"`
 	CurrencySymbol string `json:"currency_symbol,omitempty"`
+	MinQuantity    string `json:"min_quantity,omitempty"`
 	_unitCost      decimal.Decimal
 	_quantity      decimal.Decimal
 }
@@ -162,7 +163,7 @@ func (i *Item) appendColTo(options *Options, doc *Document) {
 	doc.pdf.SetY(baseY)
 	doc.pdf.SetX(ItemColSKUOffset)
 	doc.pdf.MultiCell(
-		ItemColSKUOffset-ItemColNameOffset,
+		ItemColQuantityOffset-ItemColSKUOffset,
 		3,
 		doc.encodeString(i.SKU),
 		"",
@@ -170,13 +171,12 @@ func (i *Item) appendColTo(options *Options, doc *Document) {
 		false,
 	)
 
-	// Unit price
-	doc.pdf.SetY(baseY)
-	doc.pdf.SetX(ItemColUnitPriceOffset)
+	// Quantity
+	doc.pdf.SetX(ItemColQuantityOffset)
 	doc.pdf.CellFormat(
-		ItemColQuantityOffset-ItemColUnitPriceOffset,
+		ItemColUnitPriceOffset-ItemColQuantityOffset,
 		colHeight,
-		doc.encodeString(fmt.Sprintf("%s %s", i.CurrencySymbol, i.UnitCost)),
+		doc.encodeString(i.Quantity),
 		"0",
 		0,
 		"",
@@ -185,12 +185,13 @@ func (i *Item) appendColTo(options *Options, doc *Document) {
 		"",
 	)
 
-	// Quantity
-	doc.pdf.SetX(ItemColQuantityOffset)
+	// Unit price
+	doc.pdf.SetY(baseY)
+	doc.pdf.SetX(ItemColUnitPriceOffset)
 	doc.pdf.CellFormat(
-		ItemColTotalTTCOffset-ItemColQuantityOffset,
+		ItemColTotalTTCOffset-ItemColUnitPriceOffset,
 		colHeight,
-		doc.encodeString(i.Quantity),
+		doc.encodeString(fmt.Sprintf("%s %s", i.CurrencySymbol, i.UnitCost)),
 		"0",
 		0,
 		"",
