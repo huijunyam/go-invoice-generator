@@ -373,14 +373,15 @@ func (doc *Document) appendTotal() {
 	)
 
 	if doc.DiscountAmount != "" {
-		baseY := doc.pdf.GetY() + 10
+		// baseY := doc.pdf.GetY() + 10
 
 		discountTitle := doc.Options.TextTotalDiscounted
 		if doc.DiscountPercentage != "" {
 			discountTitle = discountTitle + " (" + doc.DiscountPercentage + "%)"
 		}
 		// Draw discounted title
-		doc.pdf.SetXY(120, baseY)
+		// doc.pdf.SetXY(120, baseY)
+		doc.pdf.SetX(120)
 		doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])
 		doc.pdf.Rect(120, doc.pdf.GetY(), 40, 15, "F")
 
@@ -428,7 +429,7 @@ func (doc *Document) appendTotal() {
 		)
 
 		// Draw discount amount
-		doc.pdf.SetY(baseY)
+		// doc.pdf.SetY(baseY)
 		doc.pdf.SetX(162)
 		doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
 		doc.pdf.Rect(160, doc.pdf.GetY(), 40, 15, "F")
