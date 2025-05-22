@@ -23,6 +23,7 @@ type Document struct {
 	Customer           *Contact `json:"customer,omitempty" validate:"required"`
 	Items              []*Item  `json:"items,omitempty"`
 	Date               string   `json:"date,omitempty"`
+	DeliveryDate       string   `json:"delivery_date,omitempty"`
 	ValidityDate       string   `json:"validity_date,omitempty"`
 	PaymentTerm        string   `json:"payment_term,omitempty"`
 	DiscountPercentage string   `json:"discount_percentage,omitempty"`

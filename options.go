@@ -16,10 +16,11 @@ type Options struct {
 	TextTypeQuotation    string `default:"QUOTATION" json:"text_type_quotation,omitempty"`
 	TextTypeDeliveryNote string `default:"DELIVERY NOTE" json:"text_type_delivery_note,omitempty"`
 
-	TextRefTitle         string `default:"Ref." json:"text_ref_title,omitempty"`
-	TextVersionTitle     string `default:"Version" json:"text_version_title,omitempty"`
-	TextDateTitle        string `default:"Date" json:"text_date_title,omitempty"`
-	TextPaymentTermTitle string `default:"Payment term" json:"text_payment_term_title,omitempty"`
+	TextRefTitle          string `default:"Ref." json:"text_ref_title,omitempty"`
+	TextVersionTitle      string `default:"Version" json:"text_version_title,omitempty"`
+	TextDateTitle         string `default:"Order Date" json:"text_date_title,omitempty"`
+	TextDeliveryDateTitle string `default:"Delivery Date" json:"text_delivery_date_title,omitempty"`
+	TextPaymentTermTitle  string `default:"Payment term" json:"text_payment_term_title,omitempty"`
 
 	TextItemsNameTitle     string `default:"Name" json:"text_items_name_title,omitempty"`
 	TextItemsSKUTitle      string `default:"SKU" json:"text_items_sku_title,omitempty"`

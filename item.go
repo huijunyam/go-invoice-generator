@@ -159,6 +159,7 @@ func (i *Item) appendColTo(options *Options, doc *Document) {
 	colHeight := doc.pdf.GetY() - baseY
 
 	// sku
+	doc.pdf.SetY(baseY)
 	doc.pdf.SetX(ItemColSKUOffset)
 	doc.pdf.MultiCell(
 		ItemColSKUOffset-ItemColNameOffset,

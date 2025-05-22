@@ -132,9 +132,19 @@ func (doc *Document) appendMetas() {
 		date = doc.Date
 	}
 	dateString := fmt.Sprintf("%s: %s", doc.Options.TextDateTitle, date)
-	doc.pdf.SetXY(120, BaseMarginTop+19)
+	doc.pdf.SetXY(120, BaseMarginTop+15)
 	doc.pdf.SetFont(doc.Options.Font, "", 8)
 	doc.pdf.CellFormat(80, 4, doc.encodeString(dateString), "0", 0, "R", false, 0, "")
+
+	// appende delivery date
+	deliveryDate := time.Now().Format("02/01/2006")
+	if len(doc.DeliveryDate) > 0 {
+		deliveryDate = doc.DeliveryDate
+	}
+	deliveryDateString := fmt.Sprintf("%s: %s", doc.Options.TextDeliveryDateTitle, deliveryDate)
+	doc.pdf.SetXY(120, BaseMarginTop+19)
+	doc.pdf.SetFont(doc.Options.Font, "", 8)
+	doc.pdf.CellFormat(80, 4, doc.encodeString(deliveryDateString), "0", 0, "R", false, 0, "")
 }
 
 // appendDescription to document
@@ -359,7 +369,7 @@ func (doc *Document) appendTotal() {
 
 		discountTitle := doc.Options.TextTotalDiscounted
 		if doc.DiscountPercentage != "" {
-			discountTitle = fmt.Sprintf("%s (%s%)", discountTitle, doc.DiscountPercentage)
+			discountTitle = discountTitle + " (" + doc.DiscountPercentage + "%)"
 		}
 		// Draw discounted title
 		doc.pdf.SetXY(120, baseY)
@@ -432,10 +442,9 @@ func (doc *Document) appendTotal() {
 
 	// Draw tax title
 	if doc.TaxAmount != "" {
-
 		taxTitle := doc.Options.TextTotalTax
 		if doc.TaxPercentage != "" {
-			taxTitle = fmt.Sprintf("%s (%s%)", taxTitle, doc.TaxPercentage)
+			taxTitle = taxTitle + " (" + doc.TaxPercentage + "%)"
 		}
 		doc.pdf.SetX(120)
 		doc.pdf.SetFillColor(doc.Options.DarkBgColor[0], doc.Options.DarkBgColor[1], doc.Options.DarkBgColor[2])

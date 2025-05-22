@@ -66,6 +66,12 @@ func (d *Document) SetDate(date string) *Document {
 	return d
 }
 
+// SetDeliveryDate of document
+func (d *Document) SetDeliveryDate(date string) *Document {
+	d.DeliveryDate = date
+	return d
+}
+
 // SetPaymentTerm of document
 func (d *Document) SetPaymentTerm(term string) *Document {
 	d.PaymentTerm = term
