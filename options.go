@@ -20,6 +20,7 @@ type Options struct {
 	TextClientRefTitle    string `default:"Customer Reference" json:"text_client_ref_title,omitempty"`
 	TextVersionTitle      string `default:"Version" json:"text_version_title,omitempty"`
 	TextDateTitle         string `default:"Order Date" json:"text_date_title,omitempty"`
+	TextExpiresDateTitle  string `default:"Expiry Date" json:"text_expires_date_title,omitempty"`
 	TextDeliveryDateTitle string `default:"Delivery Date" json:"text_delivery_date_title,omitempty"`
 	TextPaymentTermTitle  string `default:"Payment term" json:"text_payment_term_title,omitempty"`
 

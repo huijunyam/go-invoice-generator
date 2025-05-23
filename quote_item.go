@@ -133,17 +133,6 @@ func (i *QuoteItem) appendColTo(options *Options, doc *Document) {
 	}
 }
 
-// Name
-// doc.pdf.SetX(ItemQuoteColNameOffset)
-// doc.pdf.MultiCell(
-// 	ItemQuoteColSKUOffset-ItemQuoteColNameOffset,
-// 	3,
-// 	doc.encodeString(i.Name),
-// 	"",
-// 	"",
-// 	false,
-// )
-
 func addPriceBreakItem(i *QuoteItem, priceBreakItem *PriceBreakItem, options *Options, doc *Document) {
 	// Get base Y (top of line)
 	baseY := doc.pdf.GetY()

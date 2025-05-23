@@ -146,7 +146,12 @@ func (doc *Document) appendMetas() {
 	if len(doc.Date) > 0 {
 		date = doc.Date
 	}
-	dateString := fmt.Sprintf("%s: %s", doc.Options.TextDateTitle, date)
+	var dateString string
+	if doc.Type == Quotation {
+		dateString = fmt.Sprintf("%s: %s", doc.Options.TextExpiresDateTitle, date)
+	} else {
+		dateString = fmt.Sprintf("%s: %s", doc.Options.TextDateTitle, date)
+	}
 	doc.pdf.SetXY(120, BaseMarginTop+19)
 	doc.pdf.SetFont(doc.Options.Font, "", 8)
 	doc.pdf.CellFormat(80, 4, doc.encodeString(dateString), "0", 0, "R", false, 0, "")
