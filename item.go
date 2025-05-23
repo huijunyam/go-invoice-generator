@@ -172,6 +172,7 @@ func (i *Item) appendColTo(options *Options, doc *Document) {
 	)
 
 	// Quantity
+	doc.pdf.SetY(baseY)
 	doc.pdf.SetX(ItemColQuantityOffset)
 	doc.pdf.CellFormat(
 		ItemColUnitPriceOffset-ItemColQuantityOffset,
