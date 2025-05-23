@@ -65,7 +65,11 @@ func (doc *Document) Build() (*fpdf.Fpdf, error) {
 	doc.appendDescription()
 
 	// Append items
-	doc.appendItems()
+	if doc.Type == Invoice {
+		doc.appendItems()
+	} else if doc.Type == DeliveryNote {
+		doc.appendShippingOrderItems()
+	}
 
 	// Check page height (total bloc height = 30, 45 when doc discount)
 	offset := doc.pdf.GetY() + 30
@@ -289,6 +293,59 @@ func (doc *Document) drawsTableTitles() {
 	)
 }
 
+func (doc *Document) drawsShippingOrderTableTitles() {
+	// Draw table titles
+	doc.pdf.SetX(10)
+	doc.pdf.SetY(doc.pdf.GetY() + 5)
+	doc.pdf.SetFont(doc.Options.BoldFont, "B", 8)
+
+	// Draw rec
+	doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
+	doc.pdf.Rect(10, doc.pdf.GetY(), 190, 6, "F")
+
+	// Name
+	doc.pdf.SetX(ItemShippingOrderColNameOffset)
+	doc.pdf.CellFormat(
+		ItemShippingOrderColSKUOffset-ItemShippingOrderColNameOffset,
+		6,
+		doc.encodeString(doc.Options.TextItemsNameTitle),
+		"0",
+		0,
+		"",
+		false,
+		0,
+		"",
+	)
+
+	// SKU
+	doc.pdf.SetX(ItemShippingOrderColSKUOffset)
+	doc.pdf.CellFormat(
+		ItemShippingOrderColQuantityOffset-ItemShippingOrderColSKUOffset,
+		6,
+		doc.encodeString(doc.Options.TextItemsSKUTitle),
+		"0",
+		0,
+		"",
+		false,
+		0,
+		"",
+	)
+
+	// Quantity
+	doc.pdf.SetX(ItemShippingOrderColQuantityOffset)
+	doc.pdf.CellFormat(
+		190-ItemShippingOrderColQuantityOffset,
+		6,
+		doc.encodeString(doc.Options.TextItemsQuantityTitle),
+		"0",
+		0,
+		"",
+		false,
+		0,
+		"",
+	)
+}
+
 // appendItems to document
 func (doc *Document) appendItems() {
 	doc.drawsTableTitles()
@@ -312,6 +369,32 @@ func (doc *Document) appendItems() {
 			// Add page
 			doc.pdf.AddPage()
 			doc.drawsTableTitles()
+			doc.pdf.SetFont(doc.Options.Font, "", 8)
+		}
+
+		doc.pdf.SetX(10)
+		doc.pdf.SetY(doc.pdf.GetY() + 6)
+	}
+}
+
+// appendItems to document
+func (doc *Document) appendShippingOrderItems() {
+	doc.drawsShippingOrderTableTitles()
+
+	doc.pdf.SetX(10)
+	doc.pdf.SetY(doc.pdf.GetY() + 8)
+	doc.pdf.SetFont(doc.Options.Font, "", 8)
+
+	for i := 0; i < len(doc.ShippingItems); i++ {
+		item := doc.ShippingItems[i]
+
+		// Append to pdf
+		item.appendColTo(doc.Options, doc)
+
+		if doc.pdf.GetY() > MaxPageHeight {
+			// Add page
+			doc.pdf.AddPage()
+			doc.drawsShippingOrderTableTitles()
 			doc.pdf.SetFont(doc.Options.Font, "", 8)
 		}
 

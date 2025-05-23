@@ -50,6 +50,17 @@ const (
 	ItemColTotalTTCOffset float64 = 175
 )
 
+const (
+	// ItemColNameOffset ...
+	ItemShippingOrderColNameOffset float64 = 10
+
+	// ItemColSKUOffset ...
+	ItemShippingOrderColSKUOffset float64 = 80
+
+	// ItemColQuantityOffset ...
+	ItemShippingOrderColQuantityOffset float64 = 120
+)
+
 var (
 	// BaseTextFontSize define the base font size for text in document
 	BaseTextFontSize float64 = 8

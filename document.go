@@ -16,24 +16,25 @@ type Document struct {
 	Type    string        `json:"type,omitempty" validate:"required,oneof=INVOICE DELIVERY_NOTE QUOTATION"`
 	Ref     string        `json:"ref,omitempty" validate:"required,min=1,max=32"`
 	// Version      string        `json:"version,omitempty" validate:"max=32"`
-	ClientRef          string   `json:"client_ref,omitempty" validate:"max=64"`
-	Description        string   `json:"description,omitempty" validate:"max=1024"`
-	Notes              string   `json:"notes,omitempty"`
-	Company            *Contact `json:"company,omitempty" validate:"required"`
-	Customer           *Contact `json:"customer,omitempty" validate:"required"`
-	Items              []*Item  `json:"items,omitempty"`
-	Date               string   `json:"date,omitempty"`
-	DeliveryDate       string   `json:"delivery_date,omitempty"`
-	ValidityDate       string   `json:"validity_date,omitempty"`
-	PaymentTerm        string   `json:"payment_term,omitempty"`
-	DiscountPercentage string   `json:"discount_percentage,omitempty"`
-	DiscountAmount     string   `json:"discount_amount,omitempty"`
-	TaxPercentage      string   `json:"tax_percentage,omitempty"`
-	TaxAmount          string   `json:"tax_amount,omitempty"`
-	Subtotal           string   `json:"subtotal,omitempty"`
-	Total              string   `json:"total,omitempty"`
-	Shipping           string   `json:"shipping,omitempty"`
-	CurrencySymbol     string   `json:"currency_symbol,omitempty"`
+	ClientRef          string          `json:"client_ref,omitempty" validate:"max=64"`
+	Description        string          `json:"description,omitempty" validate:"max=1024"`
+	Notes              string          `json:"notes,omitempty"`
+	Company            *Contact        `json:"company,omitempty" validate:"required"`
+	Customer           *Contact        `json:"customer,omitempty" validate:"required"`
+	Items              []*Item         `json:"items,omitempty"`
+	ShippingItems      []*ShippingItem `json:"shipping_items,omitempty"`
+	Date               string          `json:"date,omitempty"`
+	DeliveryDate       string          `json:"delivery_date,omitempty"`
+	ValidityDate       string          `json:"validity_date,omitempty"`
+	PaymentTerm        string          `json:"payment_term,omitempty"`
+	DiscountPercentage string          `json:"discount_percentage,omitempty"`
+	DiscountAmount     string          `json:"discount_amount,omitempty"`
+	TaxPercentage      string          `json:"tax_percentage,omitempty"`
+	TaxAmount          string          `json:"tax_amount,omitempty"`
+	Subtotal           string          `json:"subtotal,omitempty"`
+	Total              string          `json:"total,omitempty"`
+	Shipping           string          `json:"shipping,omitempty"`
+	CurrencySymbol     string          `json:"currency_symbol,omitempty"`
 }
 
 // Pdf returns the underlying *fpdf.Fpdf used to build document

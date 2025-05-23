@@ -65,6 +65,12 @@ func (d *Document) AppendItem(item *Item) *Document {
 	return d
 }
 
+// AppendShippingItem to document shipping order items
+func (d *Document) AppendShippingItem(item *ShippingItem) *Document {
+	d.ShippingItems = append(d.ShippingItems, item)
+	return d
+}
+
 // SetDate of document
 func (d *Document) SetDate(date string) *Document {
 	d.Date = date
