@@ -72,10 +72,10 @@ const (
 	ItemQuoteColMinQuantityOffset float64 = 110
 
 	// ItemColQuantityOffset ...
-	ItemQuoteColQuantityOffset float64 = 120
+	ItemQuoteColQuantityOffset float64 = 135
 
 	// ItemColUnitPriceOffset ...
-	ItemQuoteColUnitPriceOffset float64 = 145
+	ItemQuoteColUnitPriceOffset float64 = 150
 
 	// // ItemColTotalHTOffset ...
 	// ItemColTotalHTOffset float64 = 113

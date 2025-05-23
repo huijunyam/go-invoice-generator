@@ -128,26 +128,39 @@ func (i *QuoteItem) appendColTo(options *Options, doc *Document) {
 
 	if len(i.PriceBreakItems) > 0 {
 		for _, priceBreakItem := range i.PriceBreakItems {
-			addPriceBreakItem(i, priceBreakItem, options, doc, baseY, colHeight)
+			addPriceBreakItem(i, priceBreakItem, options, doc)
 		}
 	}
 }
 
-func addPriceBreakItem(i *QuoteItem, priceBreakItem *PriceBreakItem, options *Options, doc *Document, baseY float64, colHeight float64) {
+// Name
+// doc.pdf.SetX(ItemQuoteColNameOffset)
+// doc.pdf.MultiCell(
+// 	ItemQuoteColSKUOffset-ItemQuoteColNameOffset,
+// 	3,
+// 	doc.encodeString(i.Name),
+// 	"",
+// 	"",
+// 	false,
+// )
+
+func addPriceBreakItem(i *QuoteItem, priceBreakItem *PriceBreakItem, options *Options, doc *Document) {
+	// Get base Y (top of line)
+	baseY := doc.pdf.GetY()
+
 	// Quantity
-	doc.pdf.SetY(baseY)
 	doc.pdf.SetX(ItemQuoteColQuantityOffset)
-	doc.pdf.CellFormat(
+	doc.pdf.MultiCell(
 		ItemQuoteColUnitPriceOffset-ItemQuoteColQuantityOffset,
-		colHeight,
+		3,
 		doc.encodeString(priceBreakItem.Quantity),
-		"0",
-		0,
+		"",
 		"",
 		false,
-		0,
-		"",
 	)
+
+	// Compute line height
+	colHeight := doc.pdf.GetY() - baseY
 
 	// Unit price
 	doc.pdf.SetY(baseY)
