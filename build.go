@@ -69,6 +69,8 @@ func (doc *Document) Build() (*fpdf.Fpdf, error) {
 		doc.appendItems()
 	} else if doc.Type == DeliveryNote {
 		doc.appendShippingOrderItems()
+	} else if doc.Type == Quotation {
+		doc.appendQuoteItems()
 	}
 
 	// Check page height (total bloc height = 30, 45 when doc discount)
@@ -375,6 +377,128 @@ func (doc *Document) appendItems() {
 		doc.pdf.SetX(10)
 		doc.pdf.SetY(doc.pdf.GetY() + 6)
 	}
+}
+
+// appendItems to document
+func (doc *Document) appendQuoteItems() {
+	doc.drawsQuoteTableTitles()
+
+	doc.pdf.SetX(10)
+	doc.pdf.SetY(doc.pdf.GetY() + 8)
+	doc.pdf.SetFont(doc.Options.Font, "", 8)
+
+	for i := 0; i < len(doc.QuoteItems); i++ {
+		item := doc.QuoteItems[i]
+
+		// Append to pdf
+		item.appendColTo(doc.Options, doc)
+
+		if doc.pdf.GetY() > MaxPageHeight {
+			// Add page
+			doc.pdf.AddPage()
+			doc.drawsQuoteTableTitles()
+			doc.pdf.SetFont(doc.Options.Font, "", 8)
+		}
+
+		doc.pdf.SetX(10)
+		doc.pdf.SetY(doc.pdf.GetY() + 6)
+	}
+}
+
+// drawsQuoteTableTitles in document
+func (doc *Document) drawsQuoteTableTitles() {
+	// Draw table titles
+	doc.pdf.SetX(10)
+	doc.pdf.SetY(doc.pdf.GetY() + 5)
+	doc.pdf.SetFont(doc.Options.BoldFont, "B", 8)
+
+	// Draw rec
+	doc.pdf.SetFillColor(doc.Options.GreyBgColor[0], doc.Options.GreyBgColor[1], doc.Options.GreyBgColor[2])
+	doc.pdf.Rect(10, doc.pdf.GetY(), 190, 6, "F")
+
+	// Name
+	doc.pdf.SetX(ItemQuoteColNameOffset)
+	doc.pdf.CellFormat(
+		ItemQuoteColSKUOffset-ItemQuoteColNameOffset,
+		6,
+		doc.encodeString(doc.Options.TextItemsNameTitle),
+		"0",
+		0,
+		"",
+		false,
+		0,
+		"",
+	)
+
+	// SKU
+	doc.pdf.SetX(ItemQuoteColSKUOffset)
+	doc.pdf.CellFormat(
+		ItemQuoteColMinQuantityOffset-ItemQuoteColSKUOffset,
+		6,
+		doc.encodeString(doc.Options.TextItemsSKUTitle),
+		"0",
+		0,
+		"",
+		false,
+		0,
+		"",
+	)
+
+	// Min quantity
+	doc.pdf.SetX(ItemQuoteColMinQuantityOffset)
+	doc.pdf.CellFormat(
+		ItemQuoteColQuantityOffset-ItemQuoteColMinQuantityOffset,
+		6,
+		doc.encodeString(doc.Options.TextItemsMinQuantityTitle),
+		"0",
+		0,
+		"",
+		false,
+		0,
+		"",
+	)
+
+	// Quantity
+	doc.pdf.SetX(ItemQuoteColQuantityOffset)
+	doc.pdf.CellFormat(
+		ItemQuoteColUnitPriceOffset-ItemQuoteColQuantityOffset,
+		6,
+		doc.encodeString(doc.Options.TextItemsQuantityTitle),
+		"0",
+		0,
+		"",
+		false,
+		0,
+		"",
+	)
+
+	// Unit price
+	doc.pdf.SetX(ItemQuoteColUnitPriceOffset)
+	doc.pdf.CellFormat(
+		ItemQuoteColTotalTTCOffset-ItemQuoteColUnitPriceOffset,
+		6,
+		doc.encodeString(doc.Options.TextItemsUnitCostTitle),
+		"0",
+		0,
+		"",
+		false,
+		0,
+		"",
+	)
+
+	// TOTAL TTC
+	doc.pdf.SetX(ItemQuoteColTotalTTCOffset)
+	doc.pdf.CellFormat(
+		190-ItemQuoteColTotalTTCOffset,
+		6,
+		doc.encodeString(doc.Options.TextItemsTotalTTCTitle),
+		"0",
+		0,
+		"",
+		false,
+		0,
+		"",
+	)
 }
 
 // appendItems to document

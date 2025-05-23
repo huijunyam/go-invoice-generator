@@ -71,6 +71,12 @@ func (d *Document) AppendShippingItem(item *ShippingItem) *Document {
 	return d
 }
 
+// AppendQuoteItem to document quote items
+func (d *Document) AppendQuoteItem(item *QuoteItem) *Document {
+	d.QuoteItems = append(d.QuoteItems, item)
+	return d
+}
+
 // SetDate of document
 func (d *Document) SetDate(date string) *Document {
 	d.Date = date

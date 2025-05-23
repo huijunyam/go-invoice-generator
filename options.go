@@ -23,14 +23,15 @@ type Options struct {
 	TextDeliveryDateTitle string `default:"Delivery Date" json:"text_delivery_date_title,omitempty"`
 	TextPaymentTermTitle  string `default:"Payment term" json:"text_payment_term_title,omitempty"`
 
-	TextItemsNameTitle     string `default:"Name" json:"text_items_name_title,omitempty"`
-	TextItemsSKUTitle      string `default:"SKU" json:"text_items_sku_title,omitempty"`
-	TextItemsUnitCostTitle string `default:"Unit price" json:"text_items_unit_cost_title,omitempty"`
-	TextItemsQuantityTitle string `default:"Qty" json:"text_items_quantity_title,omitempty"`
-	TextItemsTotalHTTitle  string `default:"Total no tax" json:"text_items_total_ht_title,omitempty"`
-	TextItemsTaxTitle      string `default:"Tax" json:"text_items_tax_title,omitempty"`
-	TextItemsDiscountTitle string `default:"Discount" json:"text_items_discount_title,omitempty"`
-	TextItemsTotalTTCTitle string `default:"Total" json:"text_items_total_ttc_title,omitempty"`
+	TextItemsNameTitle        string `default:"Name" json:"text_items_name_title,omitempty"`
+	TextItemsSKUTitle         string `default:"SKU" json:"text_items_sku_title,omitempty"`
+	TextItemsUnitCostTitle    string `default:"Unit price" json:"text_items_unit_cost_title,omitempty"`
+	TextItemsMinQuantityTitle string `default:"Min order qty" json:"text_items_min_quantity_title,omitempty"`
+	TextItemsQuantityTitle    string `default:"Qty" json:"text_items_quantity_title,omitempty"`
+	TextItemsTotalHTTitle     string `default:"Total no tax" json:"text_items_total_ht_title,omitempty"`
+	TextItemsTaxTitle         string `default:"Tax" json:"text_items_tax_title,omitempty"`
+	TextItemsDiscountTitle    string `default:"Discount" json:"text_items_discount_title,omitempty"`
+	TextItemsTotalTTCTitle    string `default:"Total" json:"text_items_total_ttc_title,omitempty"`
 
 	TextTotalTotal      string `default:"SUBTOTAL" json:"text_total_total,omitempty"`
 	TextTotalDiscounted string `default:"DISCOUNT" json:"text_total_discounted,omitempty"`

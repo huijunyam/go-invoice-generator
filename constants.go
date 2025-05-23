@@ -61,6 +61,35 @@ const (
 	ItemShippingOrderColQuantityOffset float64 = 120
 )
 
+const (
+	// ItemColNameOffset ...
+	ItemQuoteColNameOffset float64 = 10
+
+	// ItemColSKUOffset ...
+	ItemQuoteColSKUOffset float64 = 80
+
+	// ItemColMinQuantityOffset ...
+	ItemQuoteColMinQuantityOffset float64 = 110
+
+	// ItemColQuantityOffset ...
+	ItemQuoteColQuantityOffset float64 = 120
+
+	// ItemColUnitPriceOffset ...
+	ItemQuoteColUnitPriceOffset float64 = 145
+
+	// // ItemColTotalHTOffset ...
+	// ItemColTotalHTOffset float64 = 113
+
+	// // ItemColDiscountOffset ...
+	// ItemColDiscountOffset float64 = 140
+
+	// // ItemColTaxOffset ...
+	// ItemColTaxOffset float64 = 157
+
+	// ItemColTotalTTCOffset ...
+	ItemQuoteColTotalTTCOffset float64 = 175
+)
+
 var (
 	// BaseTextFontSize define the base font size for text in document
 	BaseTextFontSize float64 = 8
