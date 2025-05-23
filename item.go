@@ -25,18 +25,18 @@ type Item struct {
 // Prepare convert strings to decimal
 func (i *Item) Prepare() error {
 	// Unit cost
-	unitCost, err := decimal.NewFromString(i.UnitCost)
-	if err != nil {
-		return err
-	}
-	i._unitCost = unitCost
+	// unitCost, err := decimal.NewFromString(i.UnitCost)
+	// if err != nil {
+	// 	return err
+	// }
+	// i._unitCost = unitCost
 
-	// Quantity
-	quantity, err := decimal.NewFromString(i.Quantity)
-	if err != nil {
-		return err
-	}
-	i._quantity = quantity
+	// // Quantity
+	// quantity, err := decimal.NewFromString(i.Quantity)
+	// if err != nil {
+	// 	return err
+	// }
+	// i._quantity = quantity
 
 	// Tax
 	// if i.Tax != nil {
