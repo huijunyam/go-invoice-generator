@@ -148,11 +148,6 @@ func (doc *Document) appendMetas() {
 	}
 	var dateString string
 	dateString = fmt.Sprintf("%s: %s", doc.Options.TextDateTitle, date)
-	if doc.Type == Quotation {
-		dateString = fmt.Sprintf("%s: %s", doc.Options.TextExpiresDateTitle, date)
-	} else {
-
-	}
 	doc.pdf.SetXY(120, BaseMarginTop+19)
 	doc.pdf.SetFont(doc.Options.Font, "", 8)
 	doc.pdf.CellFormat(80, 4, doc.encodeString(dateString), "0", 0, "R", false, 0, "")
@@ -167,7 +162,6 @@ func (doc *Document) appendMetas() {
 		} else {
 			deliveryDateString = fmt.Sprintf("%s: %s", doc.Options.TextDeliveryDateTitle, deliveryDate)
 		}
-
 		doc.pdf.SetXY(120, BaseMarginTop+23)
 		doc.pdf.SetFont(doc.Options.Font, "", 8)
 		doc.pdf.CellFormat(80, 4, doc.encodeString(deliveryDateString), "0", 0, "R", false, 0, "")
