@@ -147,24 +147,32 @@ func (doc *Document) appendMetas() {
 		date = doc.Date
 	}
 	var dateString string
+	dateString = fmt.Sprintf("%s: %s", doc.Options.TextDateTitle, date)
 	if doc.Type == Quotation {
 		dateString = fmt.Sprintf("%s: %s", doc.Options.TextExpiresDateTitle, date)
 	} else {
-		dateString = fmt.Sprintf("%s: %s", doc.Options.TextDateTitle, date)
+
 	}
 	doc.pdf.SetXY(120, BaseMarginTop+19)
 	doc.pdf.SetFont(doc.Options.Font, "", 8)
 	doc.pdf.CellFormat(80, 4, doc.encodeString(dateString), "0", 0, "R", false, 0, "")
 
 	// appende delivery date
-	deliveryDate := time.Now().Format("02/01/2006")
 	if len(doc.DeliveryDate) > 0 {
-		deliveryDate = doc.DeliveryDate
+		deliveryDate := doc.DeliveryDate
+		var deliveryDateString string
+		if doc.Type == Quotation {
+			// this is expiry date
+			deliveryDateString = fmt.Sprintf("%s: %s", doc.Options.TextExpiresDateTitle, deliveryDate)
+		} else {
+			deliveryDateString = fmt.Sprintf("%s: %s", doc.Options.TextDeliveryDateTitle, deliveryDate)
+		}
+
+		doc.pdf.SetXY(120, BaseMarginTop+23)
+		doc.pdf.SetFont(doc.Options.Font, "", 8)
+		doc.pdf.CellFormat(80, 4, doc.encodeString(deliveryDateString), "0", 0, "R", false, 0, "")
 	}
-	deliveryDateString := fmt.Sprintf("%s: %s", doc.Options.TextDeliveryDateTitle, deliveryDate)
-	doc.pdf.SetXY(120, BaseMarginTop+23)
-	doc.pdf.SetFont(doc.Options.Font, "", 8)
-	doc.pdf.CellFormat(80, 4, doc.encodeString(deliveryDateString), "0", 0, "R", false, 0, "")
+
 }
 
 // appendDescription to document
